@@ -1,28 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap");
 
 :root {
   /* Dracula color palette */
-  --bg:           #282a36;
-  --bg-darker:    #21222c;
-  --bg-lighter:   #343746;
+  --bg: #282a36;
+  --bg-darker: #21222c;
+  --bg-lighter: #343746;
   --current-line: #44475a;
-  --selection:    #44475a;
-  --foreground:   #f8f8f2;
-  --comment:      #6272a4;
-  --cyan:         #8be9fd;
-  --green:        #50fa7b;
-  --orange:       #ffb86c;
-  --pink:         #ff79c6;
-  --purple:       #bd93f9;
-  --red:          #ff5555;
-  --yellow:       #f1fa8c;
+  --selection: #44475a;
+  --foreground: #f8f8f2;
+  --comment: #6272a4;
+  --cyan: #8be9fd;
+  --green: #50fa7b;
+  --orange: #ffb86c;
+  --pink: #ff79c6;
+  --purple: #bd93f9;
+  --red: #ff5555;
+  --yellow: #f1fa8c;
 
   /* Sidebar */
-  --sidebar-bg:   #1e1f29;
-  --sidebar-w:    220px;
+  --sidebar-bg: #1e1f29;
+  --sidebar-w: 220px;
 
   /* Tab bar */
-  --tab-h:        36px;
+  --tab-h: 36px;
 }
 
 * {
@@ -38,17 +38,27 @@ html {
 body {
   background: var(--bg-darker);
   color: var(--foreground);
-  font-family: 'Fira Code', 'JetBrains Mono', monospace;
+  font-family: "Fira Code", "JetBrains Mono", monospace;
   font-size: 14px;
   line-height: 1.6;
   overflow-x: hidden;
 }
 
 /* Scrollbar */
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: var(--bg-darker); }
-::-webkit-scrollbar-thumb { background: var(--comment); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--purple); }
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-darker);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--comment);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--purple);
+}
 
 /* Selection */
 ::selection {
