@@ -1,0 +1,17 @@
+<svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background transparente, sem preenchimento -->
+
+  <!-- T minimalista em gradiente -->
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Barra horizontal do T -->
+  <rect x="50" y="50" width="156" height="28" fill="url(#grad)" rx="4"/>
+
+  <!-- Barra vertical do T -->
+  <rect x="114" y="78" width="28" height="128" fill="url(#grad)" rx="4"/>
+</svg>
