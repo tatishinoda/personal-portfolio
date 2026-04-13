@@ -930,6 +930,13 @@ export default function ClientPortfolio({
     else setSidebarOpen(true);
   }, [isMobile]);
 
+  // Atualizar title da página conforme muda a aba
+  useEffect(() => {
+    const currentTabObj = tabs.find((t) => t.id === activeTab) ?? tabs[0];
+    const pageTitle = `${currentTabObj.short} | ${aboutMe.name} – Portfólio`;
+    document.title = pageTitle;
+  }, [activeTab]);
+
   const sectionContent: Record<string, React.ReactNode> = {
     about: <AboutSection isMobile={isMobile} />,
     projects: (

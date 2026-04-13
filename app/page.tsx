@@ -36,7 +36,7 @@ function transformGitHubRepo(repo: GitHubRepository, index: number) {
   return {
     name: repo.name,
     description:
-      repo.description || "Repositório marcado com estrela no GitHub",
+      repo.description || "Repositórios de destarque no meu perfil do GitHub",
     tech: repo.topics.length > 0 ? repo.topics : [repo.language || "Code"],
     link: repo.html_url,
     color: getColorForTech(repo.language, index),
