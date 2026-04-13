@@ -48,17 +48,22 @@ export default async function Portfolio() {
   let projects = [];
 
   try {
+    console.log("[Portfolio] Iniciando busca de repositórios...");
     const starredRepos = await getStarredRepositories();
     // Pega todos os repositórios pinned (em destaque no perfil)
     projects = starredRepos.map(transformGitHubRepo);
+    console.log(`[Portfolio] ✓ ${projects.length} projetos carregados`);
   } catch (error) {
-    console.error("Erro ao carregar projetos:", error);
+    console.error(
+      "[Portfolio] ✗ Erro ao carregar projetos:",
+      error instanceof Error ? error.message : String(error),
+    );
     // Usa projeto padrão em caso de erro
     projects = [
       {
         name: "github-api-error",
         description:
-          "Não foi possível conectar com o GitHub no momento. Verifique suas credenciais em .env.local",
+          "Erro ao conectar com GitHub. Verifique os logs para detalhes.",
         tech: ["GitHub API"],
         link: "https://docs.github.com/en/rest",
         color: "#bd93f9",

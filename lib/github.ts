@@ -10,10 +10,16 @@ export interface GitHubRepository {
 
 export async function getStarredRepositories(): Promise<GitHubRepository[]> {
   if (!process.env.GITHUB_TOKEN || !process.env.GITHUB_USERNAME) {
-    throw new Error("GITHUB_TOKEN e GITHUB_USERNAME precisam ser configurados");
+    const msg = "GITHUB_TOKEN e GITHUB_USERNAME precisam ser configurados";
+    console.error(msg);
+    throw new Error(msg);
   }
 
   try {
+    console.log(
+      `[GitHub API] Buscando repositórios pinned para: ${process.env.GITHUB_USERNAME}`,
+    );
+
     // GraphQL query para buscar repositórios pinned (em destaque)
     const query = `
       query {
@@ -53,21 +59,44 @@ export async function getStarredRepositories(): Promise<GitHubRepository[]> {
       next: { revalidate: 3600 }, // Cache por 1 hora
     });
 
+    console.log(
+      `[GitHub API] Response status: ${response.status} ${response.statusText}`,
+    );
+
     if (!response.ok) {
-      throw new Error(`GitHub API retornou ${response.status}`);
+      const errorText = await response.text();
+      console.error(`[GitHub API] Error response: ${errorText}`);
+      throw new Error(
+        `GitHub API retornou ${response.status}: ${response.statusText}`,
+      );
     }
 
     const data = await response.json();
 
     if (data.errors) {
-      console.error("GraphQL errors:", data.errors);
-      throw new Error(data.errors[0].message);
+      console.error(
+        "[GitHub API] GraphQL errors:",
+        JSON.stringify(data.errors),
+      );
+      throw new Error(
+        `GraphQL Error: ${data.errors.map((e: { message: string }) => e.message).join(", ")}`,
+      );
+    }
+
+    // Verificar se temos dados
+    const pinnedItems = data.data?.user?.pinnedItems?.nodes;
+    if (!pinnedItems || pinnedItems.length === 0) {
+      console.warn(
+        "[GitHub API] Nenhum repositório pinned encontrado para usuario",
+      );
+    } else {
+      console.log(
+        `[GitHub API] Encontrados ${pinnedItems.length} repositórios pinned`,
+      );
     }
 
     // Transformar resposta GraphQL para o formato esperado
-    const repos: GitHubRepository[] = (
-      data.data?.user?.pinnedItems?.nodes || []
-    ).map(
+    const repos: GitHubRepository[] = (pinnedItems || []).map(
       (repo: {
         name: string;
         description: string | null;
@@ -86,9 +115,13 @@ export async function getStarredRepositories(): Promise<GitHubRepository[]> {
       }),
     );
 
+    console.log("[GitHub API] ✓ Repositórios carregados com sucesso");
     return repos;
   } catch (error) {
-    console.error("Erro ao buscar repositórios pinned do GitHub:", error);
+    console.error(
+      "[GitHub API] ✗ Erro ao buscar repositórios pinned:",
+      error instanceof Error ? error.message : String(error),
+    );
     return [];
   }
 }
